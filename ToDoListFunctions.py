@@ -1,4 +1,4 @@
-file_name = "C:/Users/65866/PycharmProjects/app1/todos.txt"
+file_name = "todos.txt"
 
 
 def read_todo(file):
