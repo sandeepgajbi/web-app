@@ -1,16 +1,16 @@
 import streamlit as st
 import ToDoListFunctions as fs
 
-file_name = "C:/Users/65866/PycharmProjects/app1/todos.txt"
-
-todos = fs.read_todo(file_name)
+todos = fs.read_todo(fs.file_name)
 
 
 def add_todo():
-    user_input = st.session_state["new_todo"]
-    todos.append(user_input + "\n")
-    fs.write_todo(file_name, todos)
-    del st.session_state["new_todo"]
+    if "new_todo" in st.session_state:
+        new_todo = st.session_state.new_todo.strip()
+        if new_todo:
+            todos.append(new_todo + "\n")
+            fs.write_todo(fs.file_name, todos)
+            st.session_state.new_todo = ""
 
 
 st.title("My Todo App")
@@ -21,9 +21,10 @@ for index, todo in enumerate(todos):
     checkbox = st.checkbox(todo, key=index)
     if checkbox:
         todos.pop(index)
-        fs.write_todo(file_name, todos)
+        fs.write_todo(fs.file_name, todos)
         del st.session_state[index]
         st.rerun()
 
 st.text_input(label="add", label_visibility='hidden', placeholder="Add new todo..",
-              on_change=add_todo, key='new_todo')
+              key='new_todo')
+st.button("Add", on_click=add_todo)
