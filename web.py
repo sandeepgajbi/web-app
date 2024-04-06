@@ -3,7 +3,6 @@ import ToDoListFunctions as fs
 
 todos = fs.read_todo(fs.file_name)
 
-
 def add_todo():
     if "new_todo" in st.session_state:
         new_todo = st.session_state.new_todo.strip()
